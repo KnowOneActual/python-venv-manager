@@ -6,24 +6,34 @@
 
 *\*Windows support via Git Bash*
 
+
+# Python Virtual Environment Manager
+
+
+
 A smart shell script to simplify your Python development workflow. This script provides a single, intelligent command to create, activate, or deactivate a Python virtual environment based on the current context of your directory.
 
 
 ## The Why: Simplify Your Workflow
 
-Managing Python virtual environments can be repetitive. This script streamlines that entire process into a single command. It knows what to do, so you don't have to.
+Managing Python virtual environments can be repetitive. You have to remember if you've already created an environment, manually source the activation script, or remember to deactivate it when you're done.
+
+This script streamlines that entire process into a single command. It knows what to do, so you don't have to.
 
 
 ## The What: Key Features
 
-This script is an all-in-one solution that will:
+This script is an all-in-one solution that provides helpful user feedback and will:
 
 
 
-* **Create:** If no virtual environment is found in the current folder, it creates a new one named .venv.
-* **Configure:** Automatically sets include-system-site-packages = true in the pyvenv.cfg file upon creation, giving you access to globally installed packages.
+* **Create:** If no virtual environment is found, it creates a new one named .venv.
+* **Configure:** Automatically sets include-system-site-packages = true upon creation.
 * **Activate:** If a .venv folder exists but is not active, it activates it.
 * **Deactivate:** If a virtual environment is already active, it deactivates it.
+* **Automate Setup:** Upon creation, the script automatically:
+    * Upgrades pip to the latest version.
+    * Installs all packages from a requirements.txt file if one is found.
 
 
 ## The How: Installation and Usage
@@ -35,10 +45,18 @@ The script is designed to be sourced by your shell, making its function availabl
 
 Once installed, simply navigate to your project directory and run:
 
-venv 
+```
+venv_manager.sh
 
+```
 
-The script will automatically figure out what to do.
+The script will automatically figure out what to do. For more information on usage, run:
+
+```
+venv_manager.sh --help \
+
+```
+
 
 
 ### Installation on macOS & Linux (zsh, bash)
@@ -49,10 +67,11 @@ These instructions work for the default Terminal on macOS (Zsh) and most Linux d
 
 First, create a place to store your utility scripts in your home directory (if you don't have one already).
 
-```bash
-mkdir -p ~/scripts 
+```
+mkdir -p ~/scripts \
 
 ```
+
 
 **2. Save the Script**
 
@@ -62,8 +81,7 @@ Download or copy the venv_manager.sh script from this repository into your new ~
 
 Give your system permission to run the script.
 
-```bash
-
+```
 chmod +x ~/scripts/venv_manager.sh 
 
 ```
@@ -75,12 +93,12 @@ You need to tell your shell to load this script every time it starts.
 
 
 
-* **If you use Zsh** (default on modern macOS), add the following lines to your ~/.zshrc file:
+* **If you use Zsh** (default on modern macOS), add the following lines to your ~/.zshrc file: \
 
 ```
 # Load custom python venv manager
 source ~/scripts/venv_manager.sh
-alias venv="venv_manager"
+alias venv="venv_manager" 
 
 ```
 
@@ -100,10 +118,9 @@ To apply the changes, either close and reopen your terminal or run source ~/.zsh
 Open Git Bash and create a folder for your scripts in your user's home directory.
 
 ```
-mkdir -p ~/scripts 
+mkdir -p ~/scripts
 
 ```
-
 
 **2. Save the Script**
 
@@ -114,12 +131,12 @@ Download or copy the venv_manager.sh script into ~/scripts/.
 You need to tell Git Bash to load the script on startup. Add the following lines to your ~/.bashrc file. You may need to create this file if it doesn't exist.
 
 ```
-
 # Load custom python venv manager
-source ~/scripts/venv_manager.sh 
-alias venv="venv_manager" 
+source ~/scripts/venv_manager.sh
+alias venv="venv_manager"
 
 ```
+
 
 **4. Restart Git Bash**
 
