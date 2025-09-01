@@ -87,7 +87,7 @@ __pycache__/
 # For example:
 # /my-secret-folder/
 
-# Personal shorthands (from your original file)
+# Personal shorthands (original file)
 # ==============================================
 _hold
 _docs
@@ -95,3 +95,4 @@ _comps*
 _scratch.*
 *.scratch.*
 *.scratch
+start-work.sh
