@@ -9,7 +9,6 @@
 
 # Python Virtual Environment Manager
 
-**Windows support via Git Bash*
 
 A smart shell script to simplify your Python development workflow. This script provides a single, intelligent command to create, activate, or deactivate a Python virtual environment based on the current context of your directory.
 
