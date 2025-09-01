@@ -1,5 +1,10 @@
 
 # Python Virtual Environment Manager
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Platform](https://img.shields.io/badge/Platform-macOS%20%7C%20Linux%20%7C%20Windows*-blue)](README.md#installation)
+[![Language](https://img.shields.io/badge/Language-Shell%20Script-black)](venv_manager.sh)
+
+*\*Windows support via Git Bash*
 
 A smart shell script to simplify your Python development workflow. This script provides a single, intelligent command to create, activate, or deactivate a Python virtual environment based on the current context of your directory.
 
