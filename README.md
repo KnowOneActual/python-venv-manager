@@ -30,7 +30,7 @@ The script is designed to be sourced by your shell, making its function availabl
 
 Once installed, simply navigate to your project directory and run:
 
-venv \
+venv 
 
 
 The script will automatically figure out what to do.
@@ -44,8 +44,10 @@ These instructions work for the default Terminal on macOS (Zsh) and most Linux d
 
 First, create a place to store your utility scripts in your home directory (if you don't have one already).
 
-mkdir -p ~/scripts \
+```bash
+mkdir -p ~/scripts 
 
+```
 
 **2. Save the Script**
 
@@ -55,7 +57,11 @@ Download or copy the venv_manager.sh script from this repository into your new ~
 
 Give your system permission to run the script.
 
-chmod +x ~/scripts/venv_manager.sh \
+```bash
+
+chmod +x ~/scripts/venv_manager.sh 
+
+```
 
 
 **4. Connect the Script to Your Shell**
@@ -65,9 +71,13 @@ You need to tell your shell to load this script every time it starts.
 
 
 * **If you use Zsh** (default on modern macOS), add the following lines to your ~/.zshrc file:
+
+```
 # Load custom python venv manager
 source ~/scripts/venv_manager.sh
 alias venv="venv_manager"
+
+```
 
 * **If you use Bash**, add the same lines to your ~/.bashrc file instead.
 
@@ -84,7 +94,10 @@ To apply the changes, either close and reopen your terminal or run source ~/.zsh
 
 Open Git Bash and create a folder for your scripts in your user's home directory.
 
+```
 mkdir -p ~/scripts 
+
+```
 
 
 **2. Save the Script**
@@ -95,10 +108,13 @@ Download or copy the venv_manager.sh script into ~/scripts/.
 
 You need to tell Git Bash to load the script on startup. Add the following lines to your ~/.bashrc file. You may need to create this file if it doesn't exist.
 
+```
+
 # Load custom python venv manager
 source ~/scripts/venv_manager.sh 
 alias venv="venv_manager" 
 
+```
 
 **4. Restart Git Bash**
 
