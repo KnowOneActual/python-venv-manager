@@ -45,15 +45,14 @@ function venv_manager() {
     # --- Creation Logic ---
     # If no venv is active and none exists here, create one.
     echo "No virtual environment found. Creating one..."
-    python3 -m venv "$VENV_DIR"
+    # Use the --system-site-packages flag to include system packages
+    python3 -m venv --system-site-packages "$VENV_DIR"
 
     if [ $? -ne 0 ]; then
         echo "Error: Failed to create the virtual environment. Is python3-venv installed?"
         return 1
     fi
 
-    # Configure to include system site packages
-    echo "include-system-site-packages = true" >> "$VENV_DIR/pyvenv.cfg"
     echo "Configured to include system site-packages."
 
     # Activate the newly created environment
@@ -74,4 +73,3 @@ function venv_manager() {
 
     echo "Done. Your new environment is ready."
 }
-
