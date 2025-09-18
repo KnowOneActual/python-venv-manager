@@ -53,7 +53,7 @@ venv
 The script will automatically figure out what to do. For more information on usage, run:
 
 ```bash
-venv --help \
+venv --help
 
 ```
 
@@ -95,7 +95,7 @@ You need to tell your shell to load this script every time it starts.
 
 
 
-* **If you use Zsh** (default on modern macOS), add the following lines to your ~/.zshrc file: \
+* **If you use Zsh** (default on modern macOS), add the following lines to your ~/.zshrc
 
 ```
 # Load custom python venv manager
