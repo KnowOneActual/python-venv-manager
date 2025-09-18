@@ -108,7 +108,14 @@ alias venv="venv_manager"
 
 **5. Reload Your Shell**
 
-To apply the changes, either close and reopen your terminal or run source ~/.zshrc (or source ~/.bashrc). The venv command is now ready to use!
+To apply the changes, either close and reopen your terminal or run 
+
+```bash
+source ~/.zshrc 
+# (or source ~/.bashrc)
+```
+
+The venv command is now ready to use!
 
 
 ### Installation on Windows (via Git Bash)
