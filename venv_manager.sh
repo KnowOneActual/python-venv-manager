@@ -19,49 +19,65 @@ function venv_manager() {
         echo "  - Deactivate the current environment if one is active."
         echo "  - Activate the .venv in the current directory if it exists."
         echo "  - Create, configure, and activate a new .venv if none exists."
-        echo "    - Upon creation, it will also upgrade pip and install dependencies"
-        echo "      from a requirements.txt file if one is found."
         return 0
     fi
 
     local VENV_DIR=".venv"
+    local PYTHON_CMD=""
+
+    # Determine which python executable to use
+    if command -v python3 &> /dev/null; then
+        PYTHON_CMD="python3"
+    elif command -v python &> /dev/null; then
+        PYTHON_CMD="python"
+    else
+        echo "Error: Python is not installed or not found in PATH."
+        return 1
+    fi
 
     # --- Deactivation Logic ---
-    # Check if a virtual environment is already active ($VIRTUAL_ENV is set by activate scripts)
     if [ -n "$VIRTUAL_ENV" ]; then
         echo "Deactivating virtual environment..."
         deactivate
         return 0
     fi
 
+    # --- Activation Helper Function ---
+    function activate_venv() {
+        if [ -f "$VENV_DIR/bin/activate" ]; then
+            source "$VENV_DIR/bin/activate"
+        elif [ -f "$VENV_DIR/Scripts/activate" ]; then
+            source "$VENV_DIR/Scripts/activate"
+        else
+            echo "Error: Could not find activation script in $VENV_DIR."
+            return 1
+        fi
+    }
+
     # --- Activation Logic ---
-    # If not active, check if a venv folder exists in the current directory
     if [ -d "$VENV_DIR" ]; then
         echo "Activating existing virtual environment..."
-        source "$VENV_DIR/bin/activate"
+        activate_venv
         return 0
     fi
 
     # --- Creation Logic ---
-    # If no venv is active and none exists here, create one.
     echo "No virtual environment found. Creating one..."
-    # Use the --system-site-packages flag to include system packages
-    python3 -m venv --system-site-packages "$VENV_DIR"
+    
+    # Removed --system-site-packages for better isolation
+    $PYTHON_CMD -m venv "$VENV_DIR"
 
     if [ $? -ne 0 ]; then
-        echo "Error: Failed to create the virtual environment. Is python3-venv installed?"
+        echo "Error: Failed to create the virtual environment."
         return 1
     fi
 
-    echo "Configured to include system site-packages."
-
-    # Activate the newly created environment
     echo "Activating new virtual environment..."
-    source "$VENV_DIR/bin/activate"
+    activate_venv
 
     # Upgrade pip
     echo "Upgrading pip..."
-    python -m pip install --upgrade pip > /dev/null 2>&1
+    $PYTHON_CMD -m pip install --upgrade pip > /dev/null 2>&1
 
     # Check for requirements.txt and install dependencies
     if [ -f "requirements.txt" ]; then
