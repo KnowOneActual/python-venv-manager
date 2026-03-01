@@ -17,6 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- Initial project setup.
+- Self-healing logic to automatically detect and rebuild broken virtual environments (e.g., after a directory move).
+- Support for `pyproject.toml` to automatically install projects in editable mode.
+- Support for functional verification of the Python interpreter before activation.
 
 

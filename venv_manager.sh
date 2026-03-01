@@ -54,38 +54,48 @@ function venv_manager() {
         fi
     }
 
-    # --- Activation Logic ---
+    # --- Activation/Self-Healing Logic ---
     if [ -d "$VENV_DIR" ]; then
-        echo "Activating existing virtual environment..."
-        activate_venv
-        return 0
+        # Verify the interpreter is functional (detects broken absolute paths)
+        if ! "$VENV_DIR/bin/python" --version >/dev/null 2>&1; then
+            echo "⚠️ Virtual environment is broken (likely due to a directory move)."
+            echo "🔧 Rebuilding..."
+            rm -rf "$VENV_DIR"
+        else
+            echo "Activating existing virtual environment..."
+            activate_venv
+            return 0
+        fi
     fi
 
     # --- Creation Logic ---
-    echo "No virtual environment found. Creating one..."
-    
-    # Removed --system-site-packages for better isolation
-    $PYTHON_CMD -m venv "$VENV_DIR"
+    if [ ! -d "$VENV_DIR" ]; then
+        echo "No virtual environment found. Creating one..."
+        $PYTHON_CMD -m venv "$VENV_DIR"
 
-    if [ $? -ne 0 ]; then
-        echo "Error: Failed to create the virtual environment."
-        return 1
+        if [ $? -ne 0 ]; then
+            echo "Error: Failed to create the virtual environment."
+            return 1
+        fi
     fi
 
-    echo "Activating new virtual environment..."
+    echo "Activating virtual environment..."
     activate_venv
 
     # Upgrade pip
     echo "Upgrading pip..."
-    $PYTHON_CMD -m pip install --upgrade pip > /dev/null 2>&1
+    pip install --upgrade pip > /dev/null 2>&1
 
-    # Check for requirements.txt and install dependencies
-    if [ -f "requirements.txt" ]; then
+    # Install dependencies
+    if [ -f "pyproject.toml" ]; then
+        echo "pyproject.toml found. Installing project in editable mode..."
+        pip install -e .
+    elif [ -f "requirements.txt" ]; then
         echo "requirements.txt found. Installing dependencies..."
         pip install -r requirements.txt
     else
-        echo "No requirements.txt found. Skipping dependency installation."
+        echo "No requirements.txt or pyproject.toml found. Skipping dependency installation."
     fi
 
-    echo "Done. Your new environment is ready."
+    echo "Done. Your environment is ready."
 }
