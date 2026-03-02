@@ -17,7 +17,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- Self-healing logic to automatically detect and rebuild broken virtual environments (e.g., after a directory move).
+- Improved Self-healing logic to automatically detect and rebuild broken virtual environments:
+    - Detect Moves: Compares the actual path of the `.venv` directory with the path defined in the `activate` script to identify if the project has been moved.
+    - Automatic Rebuild: Deletes and recreates the virtual environment if a path mismatch is detected.
+    - Path Correction: Ensures all internal paths and shebangs (e.g., for `pip`) are correctly updated to the new location.
 - Support for `pyproject.toml` to automatically install projects in editable mode.
 - Support for functional verification of the Python interpreter before activation.
 

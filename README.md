@@ -18,7 +18,7 @@ This script streamlines that entire process into a single command. It knows what
 This script is an all-in-one solution that provides helpful user feedback and will:
 
 * **Create:** If no virtual environment is found, it creates a new one named `.venv`.
-* **Self-Heal:** Automatically detects if a virtual environment is broken (e.g., moved to a different directory) and rebuilds it.
+* **Self-Heal:** Automatically detects if a virtual environment is broken (e.g., moved to a different directory) and rebuilds it. See [Documentation](docs/index.md#self-healing-logic) for details.
 * **Configure:** Automatically detects your OS to use the correct Python executable (`python3` or `python`).
 * **Activate:** If a `.venv` folder exists but is not active, it activates it (supports both POSIX `bin/` and Windows `Scripts/` paths).
 * **Deactivate:** If a virtual environment is already active, it deactivates it.

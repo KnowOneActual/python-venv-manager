@@ -56,15 +56,27 @@ function venv_manager() {
 
     # --- Activation/Self-Healing Logic ---
     if [ -d "$VENV_DIR" ]; then
-        # Verify the interpreter is functional (detects broken absolute paths)
+        # Verify the interpreter is functional
         if ! "$VENV_DIR/bin/python" --version >/dev/null 2>&1; then
-            echo "⚠️ Virtual environment is broken (likely due to a directory move)."
-            echo "🔧 Rebuilding..."
+            echo "⚠️ Virtual environment is broken (interpreter not functional)."
             rm -rf "$VENV_DIR"
         else
-            echo "Activating existing virtual environment..."
-            activate_venv
-            return 0
+            # Source it to check if it's moved
+            activate_venv >/dev/null 2>&1
+            local ACTUAL_PATH=$(cd "$VENV_DIR" && pwd -P)
+            local SOURCED_PATH=$(cd "$VIRTUAL_ENV" 2>/dev/null && pwd -P || echo "MISSING")
+            
+            if [ "$ACTUAL_PATH" != "$SOURCED_PATH" ]; then
+                echo "⚠️ Virtual environment is broken (moved from $SOURCED_PATH to $ACTUAL_PATH)."
+                echo "🔧 Rebuilding..."
+                deactivate 2>/dev/null || true
+                unset VIRTUAL_ENV
+                rm -rf "$VENV_DIR"
+                # Proceed to creation logic
+            else
+                echo "Activating existing virtual environment..."
+                return 0
+            fi
         fi
     fi
 
